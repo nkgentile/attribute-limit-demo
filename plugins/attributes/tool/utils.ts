@@ -3,27 +3,31 @@ import {orderBy} from 'natural-orderby'
 export function reducer(item: any, key: string, array: any[]) {
   if (Array.isArray(item)) {
     array.push({
-      key: key,
+      key,
       type: 'array',
     })
-    item.forEach((subItem) => {
+
+    for (const subItem of item) {
       reducer(subItem, `${key}[]`, array)
-    })
+    }
   } else if (typeof item === 'object') {
     array.push({
-      key: key,
+      key,
       type: 'object',
     })
-    Object.keys(item).forEach((subItem) => {
-      reducer(item[subItem], `${key}.${subItem}`, array)
-    })
+
+    for (const subItem in item) {
+      if (item.hasOwnProperty(subItem)) {
+        reducer(item[subItem], `${key}.${subItem}`, array)
+      }
+    }
   } else {
-    const type = typeof item
     array.push({
-      key: key,
-      type,
+      key,
+      type: typeof item,
     })
   }
+
   return array
 }
 

@@ -4,5 +4,5 @@ import AttributeTool from './tool'
 
 export const attributes = definePlugin({
   name: 'attributes',
-  tools: [AttributeTool()],
+  tools: [AttributeTool],
 })
